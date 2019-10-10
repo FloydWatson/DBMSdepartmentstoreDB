@@ -1,0 +1,406 @@
+
+-- ----------------------------------------------------------
+-- TABLES
+-- ----------------------------------------------------------
+
+CREATE TABLE address(
+    address_id serial PRIMARY KEY NOT NULL,
+    street_address VARCHAR(100) NOT NULL,
+    city VARCHAR(50) NOT NULL,
+    region VARCHAR(50) NOT NULL,
+    zip_code VARCHAR(10),
+    country VARCHAR(40) NOT NULL
+
+);
+
+-- ----------------------------------------------------------
+
+CREATE TABLE contact_details(
+    contact_details_id serial PRIMARY KEY NOT NULL,
+    email VARCHAR(50) NOT NULL,
+    phone_number VARCHAR(25) NOT NULL,
+    address_id INT  --- FK from address
+   
+);
+
+-- ----------------------------------------------------------
+
+CREATE TABLE club_card(
+    club_card_id serial PRIMARY KEY NOT NULL,
+    expiry_date DATE NOT NULL,
+    card_number VARCHAR(25) NOT NULL
+
+);
+
+-- ----------------------------------------------------------
+
+CREATE TABLE reward(
+    reward_id serial PRIMARY KEY NOT NULL,
+    account_id INT, --- FK from farmers_club_account
+    reward_type VARCHAR(20) NOT NULL,
+    reward_description VARCHAR(250)
+
+);
+
+-- ----------------------------------------------------------
+
+CREATE TABLE farmers_club_account(
+    account_id serial PRIMARY KEY NOT NULL,
+    customer_id INT, -- FK from customer
+    user_name VARCHAR(20) NOT NULL,
+    points FLOAT(6),
+    club_card_id INT, -- FK from club_card
+    store_id INT -- FK from store
+
+);
+
+-- ----------------------------------------------------------
+
+CREATE TABLE customer(
+    customer_id serial PRIMARY KEY NOT NULL,
+    given_name VARCHAR(25) NOT NULL,
+    family_name VARCHAR(25) NOT NULL,
+    contact_details_id INT -- FK from contact_details   
+
+);
+
+-- ----------------------------------------------------------
+
+CREATE TABLE supplier(
+    supplier_id serial PRIMARY KEY NOT NULL,
+    company_name VARCHAR(25) NOT NULL,
+    contact_name VARCHAR(25),
+    contact_details_id INT -- FK from contact_details  
+
+);
+
+-- ----------------------------------------------------------
+
+CREATE TABLE employee(
+    employee_id serial PRIMARY KEY NOT NULL,
+    given_name VARCHAR(25) NOT NULL,
+    family_name VARCHAR(25) NOT NULL,
+    contact_details_id INT, -- FK from contact_details 
+    job_id INT, -- FK from job
+    salary FLOAT(10) NOT NULL,
+    manager_id INT, -- FK from employee
+    department_id INT, -- FK from department_id
+    pay_info_id INT -- FK from pay_info    
+
+);
+
+-- ----------------------------------------------------------
+
+CREATE TABLE job(
+    job_id serial PRIMARY KEY NOT NULL,
+    job_title VARCHAR(25) NOT NULL,
+    min_salary FLOAT(10),
+    max_salary FLOAT(10)
+
+);
+
+-- ----------------------------------------------------------
+
+CREATE TABLE pay_info(
+    pay_info_id serial PRIMARY KEY NOT NULL,
+    frequency VARCHAR(15) NOT NULL,
+    account VARCHAR(25) NOT NULL
+
+);
+
+-- ----------------------------------------------------------
+
+CREATE TABLE department(
+    department_id serial PRIMARY KEY NOT NULL,
+    department_name VARCHAR(25) NOT NULL,
+    store_id INT -- FK from store
+    
+);
+
+-- ----------------------------------------------------------
+
+CREATE TABLE store(
+    store_id serial PRIMARY KEY NOT NULL,
+    contact_details_id INT, -- FK from contact_details
+    store_name VARCHAR(25)   
+
+);
+
+-- ----------------------------------------------------------
+
+CREATE TABLE shipper(
+    shipper_id serial PRIMARY KEY NOT NULL,
+    shipper_name VARCHAR(30) NOT NULL,
+    phone_number VARCHAR(20) NOT NULL
+
+);
+
+-- ----------------------------------------------------------
+
+CREATE TABLE shipping(
+    shipping_id serial PRIMARY KEY NOT NULL,
+    shipped_date DATE,
+    shipper_id INT, -- FK from shipper
+    address_id INT -- FK from address
+
+);
+
+-- ----------------------------------------------------------
+
+CREATE TABLE order_detail(
+    order_detail_id serial PRIMARY KEY NOT NULL,
+    customer_id INT, -- FK from customer
+    employee_id INT, -- FK from employee
+    order_date DATE,
+    order_status VARCHAR(10),
+    shipping_id INT, -- FK from shipping
+    freight FLOAT(7),
+    store_id INT, -- FK from store
+    sub_total FLOAT(7),
+    total FLOAT(7)
+
+);
+
+-- ----------------------------------------------------------
+
+CREATE TABLE order_line(
+    order_line_id serial PRIMARY KEY NOT NULL,
+    order_detail_id INT, -- FK from order_detail
+    product_id INT, -- FK from product
+    quantity FLOAT(3) NOT NULL, 
+    discount FLOAT(3)
+
+);
+
+-- ----------------------------------------------------------
+
+CREATE TABLE category(
+    category_id serial PRIMARY KEY NOT NULL,
+    department_id INT, -- FK from department
+    category_name VARCHAR(25) NOT NULL,
+    description VARCHAR(150)
+
+);
+
+-- ----------------------------------------------------------
+
+CREATE TABLE product(
+    product_id serial PRIMARY KEY NOT NULL,
+    product_name VARCHAR(150) NOT NULL,
+    brand_id INT, -- FK from brand
+    product_display_id INT -- FK from product_display
+
+);
+
+-- ----------------------------------------------------------
+
+CREATE TABLE stock(
+    stock_id serial PRIMARY KEY NOT NULL,
+    product_id INT, -- FK from product
+    supplier_id INT, -- FK from supplier
+    category_id INT, -- FK from category
+    department_id INT, -- FK from department
+    store_id INT, -- FK from store
+    unit_price FLOAT(7) NOT NULL,
+    unit_in_stock FLOAT(4),
+    unit_on_hold FLOAT(4),
+    unit_available FLOAT(4),
+    discontinued CHAR(1)
+
+);
+
+-- ----------------------------------------------------------
+
+CREATE TABLE brand(
+    brand_id serial PRIMARY KEY NOT NULL,
+    brand_name VARCHAR(25) NOT NULL,
+    brand_logo BYTEA
+
+);
+
+-- ----------------------------------------------------------
+
+CREATE TABLE product_display(
+    product_display_id serial PRIMARY KEY NOT NULL,
+    product_description VARCHAR(250),
+    product_image BYTEA,
+    return_policy VARCHAR(250)
+
+);
+
+-- ----------------------------------------------------------
+
+CREATE TABLE product_promotion(
+    product_promotion_id serial PRIMARY KEY NOT NULL,
+    promotion_id INT, -- FK from promotion
+    product_id INT -- FK from product
+
+);
+
+-- ----------------------------------------------------------
+
+CREATE TABLE promotion(
+    promotion_id serial PRIMARY KEY NOT NULL,
+    promotion_name VARCHAR(25) NOT NULL,
+    promotion_discount FLOAT(3),
+    promotion_details VARCHAR(250),
+    promotion_start_date DATE,
+    promotion_end_date DATE
+
+);
+
+-- ----------------------------------------------------------
+-- CONSTRAINTS
+-- ----------------------------------------------------------
+
+ALTER TABLE reward ADD 
+    CONSTRAINT account_id FOREIGN KEY (account_id)
+        REFERENCES farmers_club_account (account_id);
+
+-- ----------------------------------------------------------
+
+ALTER TABLE contact_details ADD 
+    CONSTRAINT address_id FOREIGN KEY (address_id)
+        REFERENCES address (address_id);
+
+-- ----------------------------------------------------------
+
+ALTER TABLE farmers_club_account ADD  
+    CONSTRAINT customer_id FOREIGN KEY (customer_id)
+        REFERENCES customer (customer_id);
+
+ALTER TABLE farmers_club_account ADD 
+    CONSTRAINT club_card_id FOREIGN KEY (club_card_id)
+        REFERENCES club_card (club_card_id);
+
+ALTER TABLE farmers_club_account ADD 
+    CONSTRAINT store_id FOREIGN KEY (store_id)
+        REFERENCES store (store_id);
+
+-- ----------------------------------------------------------
+
+ALTER TABLE customer ADD
+    CONSTRAINT contact_details_id FOREIGN KEY (contact_details_id)
+        REFERENCES contact_details (contact_details_id);
+
+-- ----------------------------------------------------------
+
+ALTER TABLE supplier ADD
+    CONSTRAINT contact_details_id FOREIGN KEY (contact_details_id)
+        REFERENCES contact_details (contact_details_id);
+
+-- ----------------------------------------------------------
+
+ALTER TABLE employee ADD
+    CONSTRAINT contact_details_id FOREIGN KEY (contact_details_id)
+        REFERENCES contact_details (contact_details_id);
+
+ALTER TABLE employee ADD
+    CONSTRAINT job_id FOREIGN KEY (job_id)
+        REFERENCES job (job_id);
+
+ALTER TABLE employee ADD
+    CONSTRAINT manager_id FOREIGN KEY (manager_id)
+        REFERENCES employee (employee_id);
+
+ALTER TABLE employee ADD        
+    CONSTRAINT department_id FOREIGN KEY (department_id)
+        REFERENCES department (department_id);
+
+ALTER TABLE employee ADD
+    CONSTRAINT pay_info_id FOREIGN KEY (pay_info_id)
+        REFERENCES pay_info (pay_info_id);
+
+-- ----------------------------------------------------------
+
+ALTER TABLE department ADD
+    CONSTRAINT store_id FOREIGN KEY (store_id)
+        REFERENCES store (store_id);
+
+-- ----------------------------------------------------------
+
+ALTER TABLE store ADD
+    CONSTRAINT contact_details_id FOREIGN KEY (contact_details_id)
+        REFERENCES contact_details (contact_details_id);
+
+-- ----------------------------------------------------------
+
+ALTER TABLE shipping ADD
+    CONSTRAINT shipper_id FOREIGN KEY (shipper_id)
+        REFERENCES shipper (shipper_id);
+
+ALTER TABLE shipping ADD 
+    CONSTRAINT address_id FOREIGN KEY (address_id)
+        REFERENCES address (address_id);
+
+-- ----------------------------------------------------------
+
+ALTER TABLE order_detail ADD
+    CONSTRAINT customer_id FOREIGN KEY (customer_id)
+        REFERENCES customer (customer_id);
+
+ALTER TABLE order_detail ADD
+    CONSTRAINT employee_id FOREIGN KEY (employee_id)
+        REFERENCES employee (employee_id);
+
+ALTER TABLE order_detail ADD
+    CONSTRAINT shipping_id FOREIGN KEY (shipping_id)
+        REFERENCES shipping (shipping_id);
+
+ALTER TABLE order_detail ADD
+    CONSTRAINT store_id FOREIGN KEY (store_id)
+        REFERENCES store (store_id);
+
+-- ---------------------------------------------------------- 
+
+ALTER TABLE order_line ADD
+    CONSTRAINT order_detail_id FOREIGN KEY (order_detail_id)
+        REFERENCES order_detail (order_detail_id);
+
+ALTER TABLE order_line ADD 
+    CONSTRAINT product_id FOREIGN KEY (product_id)
+        REFERENCES product (product_id);
+
+-- ----------------------------------------------------------
+
+ALTER TABLE category ADD 
+    CONSTRAINT department_id FOREIGN KEY (department_id)
+        REFERENCES department (department_id);
+
+-- ----------------------------------------------------------
+
+ALTER TABLE product ADD        
+    CONSTRAINT brand_id FOREIGN KEY (brand_id)
+        REFERENCES brand (brand_id);
+
+ALTER TABLE product ADD
+    CONSTRAINT product_display_id FOREIGN KEY (product_display_id)
+        REFERENCES product_display (product_display_id);
+
+-- ----------------------------------------------------------
+
+ALTER TABLE stock ADD
+    CONSTRAINT supplier_id FOREIGN KEY (supplier_id)
+        REFERENCES supplier (supplier_id);
+
+ALTER TABLE stock ADD
+    CONSTRAINT category_id FOREIGN KEY (category_id)
+        REFERENCES category (category_id);
+
+ALTER TABLE stock ADD
+    CONSTRAINT store_id FOREIGN KEY (store_id)
+        REFERENCES store (store_id);
+
+ALTER TABLE stock ADD
+    CONSTRAINT department_id FOREIGN KEY (department_id)
+        REFERENCES department (department_id);
+
+-- ----------------------------------------------------------
+
+ALTER TABLE product_promotion ADD
+    CONSTRAINT promotion_id FOREIGN KEY (promotion_id)
+        REFERENCES promotion (promotion_id);
+
+ALTER TABLE product_promotion ADD 
+    CONSTRAINT product_id FOREIGN KEY (product_id)
+        REFERENCES product (product_id);
