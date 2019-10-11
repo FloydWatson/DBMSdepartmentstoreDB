@@ -1174,3 +1174,21 @@ $$;
 --  WHERE product_id = '001'
  
 -- CALL return_order('001')
+
+-- ------------------------------------------------
+-- disount items in category by $5 if inbetween date
+-- ------------------------------------------------
+
+CREATE OR REPLACE PROCEDURE discount_item_in_date(_id VARCHAR, _date DATE)
+LANGUAGE plpgsql
+AS $$
+
+BEGIN
+	UPDATE stock
+	SET unit_price = unit_price - 5 
+	FROM stock
+	WHERE category_id = _id and _date > date('now') - interval '1 day' and _date < date('now') + interval '10 day'
+	
+	COMMIT;
+END;
+$$;
