@@ -250,6 +250,391 @@ CREATE TABLE promotion(
 );
 
 -- ----------------------------------------------------------
+-- INSERT VALUES
+-- ----------------------------------------------------------
+
+INSERT INTO address
+    (street_address, city, region, zip_code, country)
+VALUES
+    ('123 Fake street', 'Fakeville', 'Fake Carolina', '4124', 'USF'),
+    ('101 Fake street', 'Fakeville', 'Fake Carolina', '4124', 'USF'),
+    ('128 Fake street', 'Fakeville', 'Fake Carolina', '4124', 'USF'),
+    ('9b Fake street', 'Fakeville', 'Fake Carolina', '4124', 'USF'),
+    ('503 Grove road', 'Hastings', 'Hawkes Bay', '4124', 'New Zealand'),
+    ('142 Fredrick street', 'Hastings', 'Hawkes Bay', '4124', 'New Zealand'),
+    ('1/3 Willowpark road', 'Hastings', 'Hawkes Bay', '4124', 'New Zealand'),
+    ('123 Kenedy road', 'Napier', 'Hawkes Bay', '4124', 'New Zealand'),
+    ('100 Georgia street', 'Napier', 'Hawkes Bay', '4124', 'New Zealand'),
+    ('123 Flat Bush School road', 'Auckland', 'Auckland', '4124', 'New Zealand'),
+    ('10 Broadhurst road', 'Auckland', 'Auckland', '4124', 'New Zealand'),
+    ('123 Waterloo street', 'Daniverke', 'Manawatu', '4124', 'New Zealand'),
+    ('123 Employee street', 'Hastings', 'Hawkes Bay', '4124', 'New Zealand'),
+    ('123 Manager street', 'Hastings', 'Hawkes Bay', '4124', 'New Zealand'),
+    ('123 Store street', 'Hastings', 'Hawkes Bay', '4124', 'New Zealand'),
+    ('123 Supplier street', 'Hastings', 'Hawkes Bay', '4124', 'New Zealand');
+
+-- ----------------------------------------------------------
+
+INSERT INTO contact_details 
+    (email, phone_number, address_id)
+VALUES
+    ('fakemail@gmail.com', '0213324421', 1),
+    ('testmail@gmail.com', '8765432', 2),
+    ('geemail@gmail.com', '021322123', 3),
+    ('xtramail@xtra.com', '1234567', 4),
+    ('hotmail@hotmail.com', '0800838383', 5),
+    ('bobtereme@gmail.com', '0800754321', 6),
+    ('floyds@gmail.com', '027654342', 7),
+    ('floydisnt@gmail.com', '7432143', 8),
+    ('youwish@gmail.com', '023443243', 9),
+    ('legitas@gmail.com', '03212455', 10),
+    ('notfake@gmail.com', '068764248', 11),
+    ('isfake@gmail.com', '06321415', 12),
+    ('employee@gmail.com', '068764248', 13),
+    ('manager@gmail.com', '068764248', 14),
+    ('hastingsstore@gmail.com', '068764248', 15),
+    ('suppliers@gmail.com', '068764248', 16);
+
+-- ----------------------------------------------------------
+
+INSERT INTO store
+    (contact_details_id, store_name)
+VALUES
+    (15, 'Hastings');
+
+-- ----------------------------------------------------------
+
+INSERT INTO department 
+    (department_name, store_id)
+VALUES
+    ('Beauty', 1),
+    ('Woman', 1),
+    ('Men', 1),
+    ('Children', 1),
+    ('Toys', 1),
+    ('Home', 1),
+    ('Electrical', 1);
+
+-- ----------------------------------------------------------
+
+INSERT INTO customer
+    (given_name, family_name, contact_details_id)
+VALUES
+    ('Waka', 'Istheman', 1),
+    ('Floyd', 'Isnottheman', 2),
+    ('Gee', 'Mail', 3),
+    ('Extra', 'Mail', 4),
+    ('Hot', 'Mail', 5),
+    ('Bob', 'Tereme', 6),
+    ('Fake', 'Name', 7),
+    ('Notfake', 'Name', 8),
+    ('Homer', 'Simpson', 9),
+    ('Marge', 'Simpson', 10),
+    ('Peter', 'Griffin', 11),
+    ('Lois', 'Griffin', 12);
+
+-- ----------------------------------------------------------
+
+INSERT INTO club_card
+    (expiry_date, card_number)
+VALUES
+    (date('now') + interval '1 year', '1234232'),
+    (date('now') + interval '1 year', '1234561'),
+    (date('now') + interval '1 year', '1234123'),
+    (date('now') + interval '1 year', '1234515');
+   
+-- ----------------------------------------------------------
+
+INSERT INTO farmers_club_account
+    (customer_id, user_name, points, club_card_id, store_id)
+VALUES
+    (1, 'wakaistheman', 25, 1, 1),
+    (9, 'homiehomer', 50, 2, 1),
+    (6, 'bobtereme', 0, 3, 1),
+    (11, 'petergee', 25, 4, 1);
+
+-- ----------------------------------------------------------
+
+INSERT INTO reward
+    (account_id, reward_type, reward_description)
+VALUES
+    (2, 'flat_rate', '$5 dollars off');
+
+-- ----------------------------------------------------------
+
+INSERT INTO job
+    (job_title, min_salary, max_salary)
+VALUES
+    ('retail_assistant', 16.5, 20.00),
+    ('department_manager', 20.00, 25.50),
+    ('store_manager', 26.00, 35.00);
+
+-- ----------------------------------------------------------
+
+INSERT INTO pay_info 
+    (frequency, account)
+VALUES
+    ('weekly', '0123212314'),
+    ('weekly', '0123234235'),
+    ('weekly', '0123534225'),
+    ('weekly', '0123885688'),
+    ('weekly', '0123568356'),
+    ('weekly', '0123837634'),
+    ('weekly', '0123252745'),
+    ('weekly', '0123253673'),
+    ('weekly', '0123636473'),
+    ('weekly', '0123793030'),
+    ('weekly', '0123054721'),
+    ('weekly', '0123000976'),
+    ('weekly', '0123574777'),
+    ('weekly', '0123777434');
+
+-- ----------------------------------------------------------
+
+INSERT INTO employee
+    (given_name, family_name, contact_details_id, job_id, salary, manager_id, department_id, pay_info_id)
+VALUES
+    
+    ('Janice', 'Smith', 13, 1, 16.50, 3, 1, 1),
+    ('John', 'Smith', 13, 1, 16.00, 3, 1, 2), 
+    ('Brit', 'Sams', 14, 2, 20.50, 14, 1, 3),
+    ('James', 'Jones', 13, 1, 16.50, 5, 2, 4),
+    ('Jimmy', 'Johnson', 14, 2, 20.50, 14, 2, 5),      
+    ('Timmy', 'Thompson', 13, 1, 16.50, 7, 3, 6),  
+    ('Sarah', 'Sarahson', 14, 2, 20.50, 14, 3, 7),    
+    ('Johno', 'Johnathon', 13, 1, 16.50, 9, 4, 8),   
+    ('Shamus', 'Shaneson', 14, 2, 20.50, 14, 4, 9),   
+    ('Floyd', 'Floydson', 13, 1, 20.00, 12, 5, 10),
+    ('Peter', 'Parker', 13, 1, 16.50, 12, 5, 11),
+    ('Lani', 'Lowson', 14, 2, 25.00, 14, 5, 12),
+    ('Justice', 'James', 14, 2, 20.50, 14, 6, 13),
+    ('Petey', 'McGee', 14, 3, 26.50, 14, 7, 14);
+    
+-- ----------------------------------------------------------
+
+INSERT INTO shipper
+    (shipper_name, phone_number)
+VALUES
+    ('NZ Couriers', '0800434343'),
+    ('NZ Post', '0800454545');
+
+-- ----------------------------------------------------------
+
+INSERT INTO shipping
+    (shipped_date, shipper_id, address_id)
+VALUES
+    (date('now'), 1, 2),
+    (date('now'), 1, 3),
+    (date('now'), 2, 7),
+    (date('now'), 1, 7);
+
+-- ----------------------------------------------------------
+
+INSERT INTO category
+    (department_id, category_name, description)
+VALUES
+    (1, 'Make Up', ''),
+    (1, 'Perfume', ''),
+    (1,'Skin Care', ''),
+    (1, 'Nail Care', ''),
+    (2, 'Fashion', ''),
+    (2, 'Sleep Wear', ''),
+    (2, 'Lingerie', ''),
+    (2, 'Thermals', ''),
+    (3, 'Mens Clothing', ''),
+    (3, 'Underwear', ''),
+    (3, 'Grooming', ''),
+    (3, 'Sleep Wear', ''),
+    (4, 'Baby', ''),
+    (4, 'Girls', ''),
+    (4, 'Boys', ''),
+    (4, 'Underwear', ''),
+    (5, 'Best Selling', ''),
+    (5, 'Games', ''),
+    (5, 'Lego', ''),
+    (5, 'Cars', ''),
+    (5, 'Home of Nerf', ''),
+    (6, 'Bedding', ''),
+    (6, 'Lounge', ''),
+    (6, 'Dining', ''),
+    (6, 'Beds', ''),
+    (6, 'Kitchen', ''),
+    (6, 'Home Appliances', ''),
+    (6, 'Personal Care', ''),
+    (6, 'Whiteware', '');
+    
+-- ----------------------------------------------------------
+
+INSERT INTO promotion
+    (promotion_name, promotion_discount, promotion_details, promotion_start_date, promotion_end_date)
+VALUES
+    ('Fortnite Nerf Sale', 15, '15% off Fortnite Nerf products', date('now') + interval '1 week', date('now'));
+
+-- ----------------------------------------------------------
+
+INSERT INTO brand
+    (brand_name)
+VALUES
+    ('benefit'),
+    ('Bobbi Brown'),
+    ('Clairns'),
+    ('Whistle'),
+    ('Oliver Black'),
+    ('Bendon'),
+    ('Gasoline'),
+    ('Jockey'),
+    ('Tarnish'),
+    ('Chisel'),
+    ('Jolly Jumper'),
+    ('Nerf'),
+    ('Paw Patrol'),
+    ('Barbie'),
+    ('Hasbro Games'),
+    ('Bey Blades'),
+    ('Fisher Price'),
+    ('MADD'),
+    ('Baccarat'),
+    ('Domani'),
+    ('Sheridan'),
+    ('Your Home and Garden'),
+    ('Panasonic'),
+    ('Samsung'),
+    ('Fisher & Paykel'),
+    ('Haier'),
+    ('Sun Beam'),
+    ('Breville'),
+    ('Phillips'),
+    ('Lego');
+
+-- ----------------------------------------------------------
+
+INSERT INTO supplier
+    (company_name, contact_name, contact_details_id)
+VALUES
+    ('Toys are us MEGA MART', 'James', 16),
+    ('Beauty Products are us', 'Steph', 16),
+    ('Clothes are us', 'Georgio', 16),
+    ('Everything else is us', 'Jack', 16);
+
+-- ----------------------------------------------------------
+
+INSERT INTO product_display
+    (product_description, return_policy)
+VALUES
+    ('Make up', ''),
+    ('Make up', ''),
+    ('Three shot Nerf Gun', ''),
+    ('Tommy gun by nerf', ''),
+    ('Big boy machine gun by Nerf', ''),
+    ('Fortnite rocket launcher by Nerf', ''),
+    ('Fortnite shotgun by Nerf', ''),
+    ('Fortnite pistol by Nerf', ''),
+    ('Fortnite AR by Nerf', ''),
+    ('Protective Nerf goggles', ''),
+    ('Little Fortnite Nerf gun', ''),
+    ('Big mag Nerf gun', ''),
+    ('Multishooter Nerf gun', ''),
+    ('Clear Nerf gun', ''),
+    ('Zombie Nerf gun', ''),
+    ('Zombie Nerf gun', ''),
+    ('Big boy Nerf gun', ''),
+    ('Operation but with issues', ''),
+    ('New Monopoly', ''),
+    ('New Cluedo', ''),
+    ('New game of life', ''),
+    ('Plumber game', ''),
+    ('Porcupine game', '');
+
+-- ----------------------------------------------------------
+
+INSERT INTO product
+    (product_name, brand_id, product_display_id)
+VALUES
+    ('benefit BADgal BANG! in brightening blue', 1, 1),
+    ('benefit Roller Lash Curling Mascara', 1, 2),
+    ('Nerf Elite Trilogy DS 16', 12, 3),
+    ('Nerf Mega Megalodon', 12, 4),
+    ('Nerf Elite Titan', 12, 5),
+    ('Nerf Fortnite RL Blaster', 12, 6),
+    ('Nerf Fortnite TS Blaster', 12, 7),
+    ('Nerf Fortnite Suppressed Pistol', 12, 8),
+    ('Nerf Fortnite AR-L Blaster', 12, 9),
+    ('Nerf Elite Battle Goggles', 12, 10),
+    ('Nerf Fortnite Microshots Blaster, Assorted', 12, 11),
+    ('Nerf Elite Rukkus ICS-8', 12, 12),
+    ('Nerf AccuStrike Mega Bulldog', 12, 13),
+    ('Nerf Modulus Ghost Ops Shadow ICS-6', 12, 14),
+    ('Nerf Zombie Strike Quadrot', 12, 15),
+    ('Nerf Zombie Survival System Nail Biter', 12, 16),
+    ('Nerf Infinus', 12, 17),
+    ('Hasbro Games Botched Operation', 15, 18),
+    ('Hasbro Games Monopoly LOL Surprise', 15, 19),
+    ('Hasbro Games Clue - Lost in Vegas', 15, 20),
+    ('Hasbro Games Game of Life Quarter Life Crisis', 15, 21),
+    ('Hasbro Games Plumbers Pants', 15, 22),
+    ('Hasbro Games Porcupine Pop', 15, 23);
+
+-- ----------------------------------------------------------
+
+INSERT INTO stock
+    (supplier_id, category_id, department_id, store_id, unit_price, unit_in_stock, unit_on_hold, unit_available, discontinued)
+VALUES
+    (2, 1, 1, 1, 46.00, 6, 0, 6, 'n'),
+    (2, 1, 1, 1, 46.00, 20, 0, 20, 'n'),
+    (1, 21, 5, 1, 59.99, 5, 0, 5, 'n'),
+    (1, 21, 5, 1, 59.99, 5, 0, 5, 'n'),
+    (1, 21, 5, 1, 159.99, 5, 0, 5, 'n'),
+    (1, 21, 5, 1, 54.99, 5, 0, 5, 'n'),
+    (1, 21, 5, 1, 74.99, 5, 0, 5, 'n'),
+    (1, 21, 5, 1, 39.99, 5, 0, 5, 'n'),
+    (1, 21, 5, 1, 89.99, 5, 0, 5, 'n'),
+    (1, 21, 5, 1, 19.99, 5, 0, 5, 'n'),
+    (1, 21, 5, 1, 14.99, 5, 0, 5, 'n'),
+    (1, 21, 5, 1, 34.99, 5, 0, 5, 'n'),
+    (1, 21, 5, 1, 34.99, 5, 0, 5, 'n'),
+    (1, 21, 5, 1, 49.99, 5, 0, 5, 'n'),
+    (1, 21, 5, 1, 16.99, 5, 0, 5, 'n'),
+    (1, 21, 5, 1, 39.99, 5, 0, 5, 'n'),
+    (1, 21, 5, 1, 149.99, 5, 0, 5, 'n'),
+    (1, 18, 5, 1, 44.99, 5, 0, 5, 'n'),
+    (1, 18, 5, 1, 49.99, 5, 0, 5, 'n'),
+    (1, 18, 5, 1, 44.99, 5, 0, 5, 'n'),
+    (1, 18, 5, 1, 44.99, 5, 0, 5, 'n'),
+    (1, 18, 5, 1, 34.99, 5, 0, 5, 'n'),
+    (1, 18, 5, 1, 34.99, 5, 0, 5, 'n');
+
+-- ----------------------------------------------------------
+
+INSERT INTO product_promotion
+    (product_id, promotion_id)
+VALUES
+    (6, 1),
+    (7, 1),
+    (8, 1),
+    (9, 1);
+
+-- ----------------------------------------------------------
+
+INSERT INTO order_detail
+    (customer_id, employee_id, order_date, order_status, shipping_id, freight, store_id)
+VALUES
+    (2, 1, date('now') - interval '1 day', 'SHIPPED', 1, 5.00, 1),
+    (3, 1, date('now') - interval '1 day', 'SHIPPED', 2, 5.00, 1),
+    (7, 12, date('now') - interval '1 day', 'SHIPPED', 3, 5.00, 1),
+    (7, 12, date('now') - interval '1 day', 'SHIPPED', 3, 5.00, 1);
+
+-- ----------------------------------------------------------
+    
+INSERT INTO order_line
+    (order_detail_id, product_id, quantity, discount)
+VALUES
+    (1, 1, 1, 0),
+    (2, 2, 2, 0),
+    (3, 4, 1, 0),
+    (4, 14, 1, 0),
+    (4, 5, 1, 0);
+
+-- ----------------------------------------------------------
 -- CONSTRAINTS
 -- ----------------------------------------------------------
 
@@ -516,9 +901,7 @@ CREATE INDEX index_product_name
 CREATE INDEX index_product_brand_id
     ON product(brand_id); -- search product by brand
 
-
 -- ----------------------------------------------------------
-
 
 CREATE INDEX index_stock_supplier_id
     ON stock(supplier_id); -- search stock by supplier
