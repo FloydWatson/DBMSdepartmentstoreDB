@@ -404,3 +404,157 @@ ALTER TABLE product_promotion ADD
 ALTER TABLE product_promotion ADD 
     CONSTRAINT product_id FOREIGN KEY (product_id)
         REFERENCES product (product_id);
+
+-- ----------------------------------------------------------
+-- INDEX
+-- ----------------------------------------------------------
+
+CREATE INDEX index_address_city
+    ON address(city); -- search addresses by city
+
+CREATE INDEX index_address_region
+    ON address(region); -- search addresses by region
+
+CREATE INDEX index_address_country
+    ON address(country); -- search addresses by country
+
+-- ----------------------------------------------------------
+
+CREATE INDEX index_reward_account_id
+    ON reward(account_id); -- search rewards for account
+
+-- ----------------------------------------------------------
+
+CREATE INDEX index_customer_given_name
+    ON customer(given_name); -- search customers by name
+
+CREATE INDEX index_customer_family_name
+    ON customer(family_name); -- search customers by name
+
+-- ----------------------------------------------------------
+
+CREATE INDEX index_supplier_company_name
+    ON supplier(company_name); -- search suppliers by company name
+
+-- ----------------------------------------------------------
+
+CREATE INDEX index_employee_given_name
+    ON employee(given_name); -- search employees by name
+
+CREATE INDEX index_employee_family_name
+    ON employee(family_name); -- search employees by name
+
+CREATE INDEX index_employee_job_id
+    ON employee(job_id); -- search employees by job
+
+CREATE INDEX index_employee_manager_id
+    ON employee(manager_id); -- search employees by manager they fall under
+
+CREATE INDEX index_employee_department_id
+    ON employee(department_id); -- search employees by department they work in
+
+-- ----------------------------------------------------------
+
+CREATE INDEX index_job_title
+    ON job(job_title); -- search jobs by title
+
+-- ----------------------------------------------------------
+
+CREATE INDEX index_pay_info_frequency
+    ON pay_info(frequency); -- search pay info by frequency paid
+
+-- ----------------------------------------------------------
+
+CREATE INDEX index_department_store_id
+    ON department(store_id); -- search departments by what store they are in
+
+-- ----------------------------------------------------------
+
+CREATE INDEX index_store_name
+    ON store(store_name); -- search stores by name
+
+-- ----------------------------------------------------------
+
+CREATE INDEX index_shipper_name
+    ON shipper(shipper_name); -- search shippers by name
+
+-- ----------------------------------------------------------
+
+CREATE INDEX index_shipping_shipper_id
+    ON shipping(shipper_id); -- search shippings by shipper
+
+CREATE INDEX index_address_id
+    ON shipping(address_id); -- search shippings for an address
+
+-- ----------------------------------------------------------
+
+CREATE INDEX index_order_detail_customer_id
+    ON order_detail(customer_id); -- search orders for customers
+
+CREATE INDEX index_order_detail_employee_id
+    ON order_detail(employee_id); -- search orders by staff member involoved
+
+CREATE INDEX index_order_detail_order_status
+    ON order_detail(order_status); -- search orders by their status
+
+CREATE INDEX index_order_detail_store_id
+    ON order_detail(store_id); -- search orders by store
+
+-- ----------------------------------------------------------
+
+CREATE INDEX index_category_name
+    ON category(category_name); -- search category by name
+
+CREATE INDEX index_category_department_id
+    ON category(department_id); -- search category by department
+
+-- ----------------------------------------------------------
+
+CREATE INDEX index_product_name
+    ON product(product_name); -- search product by name
+
+CREATE INDEX index_product_brand_id
+    ON product(brand_id); -- search product by brand
+
+
+-- ----------------------------------------------------------
+
+
+CREATE INDEX index_stock_supplier_id
+    ON stock(supplier_id); -- search stock by supplier
+
+CREATE INDEX index_stock_category_id
+    ON stock(category_id); -- search stock by category
+
+CREATE INDEX index_stock_department_id
+    ON stock(department_id); -- search stock by department
+
+CREATE INDEX index_stock_store_id
+    ON stock(store_id); -- search stock by store
+
+CREATE INDEX index_stock_unit_in_stock
+    ON stock(unit_in_stock); -- search stock by amount stocked
+
+-- ----------------------------------------------------------
+
+CREATE INDEX index_brand_name
+    ON brand(brand_name); -- search brand by name
+
+-- ----------------------------------------------------------
+
+CREATE INDEX index_product_promotion_product
+    ON product_promotion(product_id); -- search product_promotions by product
+
+CREATE INDEX index_product_promotion_promotion
+    ON product_promotion(promotion_id); -- search product_promotions by promotion
+
+-- ----------------------------------------------------------
+
+CREATE INDEX index_promotion_name
+    ON promotion(promotion_name); -- search promotion by name
+
+CREATE INDEX index_promotion_start_date
+    ON promotion(promotion_start_date); -- search promotion by start date
+
+CREATE INDEX index_promotion_end_date
+    ON promotion(promotion_end_date); -- search promotion by end date
