@@ -1187,7 +1187,7 @@ BEGIN
 	UPDATE stock
 	SET unit_price = unit_price - 5 
 	FROM stock
-	WHERE category_id = _id and _date > date('now') - interval '1 day' and _date < date('now') + interval '10 day'
+	WHERE category_id = _id and _date > date('now') - interval '1 day' and _date < date('now') + interval '10 day';
 	
 	COMMIT;
 END;
