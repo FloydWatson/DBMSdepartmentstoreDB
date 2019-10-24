@@ -780,6 +780,10 @@ ALTER TABLE stock ADD
     CONSTRAINT department_id FOREIGN KEY (department_id)
         REFERENCES department (department_id);
 
+ALTER TABLE stock ADD
+    CONSTRAINT product_id FOREIGN KEY (product_id)
+        REFERENCES product (product_id);
+
 -- ----------------------------------------------------------
 
 ALTER TABLE product_promotion ADD
@@ -948,7 +952,8 @@ CREATE INDEX index_promotion_end_date
 
 -- first view. account and reward from store
 
-CREATE VIEW club_members_list AS
+DROP VIEW IF EXISTS club_members_list_view;
+CREATE VIEW club_members_list_view AS
 SELECT t1.account_id, t1.store_id, t4.store_name, t3.customer_id, t3.given_name, t3.family_name, t1.user_name, t1.points, t2.reward_type, t2.reward_description, t2.reward_id
 FROM farmers_club_account as t1
 LEFT OUTER JOIN reward as t2 ON (t1.account_id = t2.account_id)
@@ -962,8 +967,9 @@ LEFT OUTER JOIN store as t4 ON (t1.store_id = t4.store_id);
 
 -- second view. product list from given category
 
-CREATE VIEW product_list as
-SELECT t3.category_id, t1.product_name, t2.brand_name, t3.unit_price, t3.unit_in_stock, t3.unit_available, t3.discontinued
+DROP VIEW IF EXISTS product_list_view;
+CREATE VIEW product_list_view as
+SELECT t3.category_id, t1.product_name, t2.brand_name, t3.unit_price, t3.unit_in_stock, t3.unit_available, t3.discontinued, t1.brand_id, t1.product_id
 FROM product as t1
 LEFT OUTER JOIN brand as t2 ON (t1.brand_id = t2.brand_id)
 LEFT OUTER JOIN stock as t3 ON (t1.product_id = t3.product_id);
@@ -975,8 +981,9 @@ LEFT OUTER JOIN stock as t3 ON (t1.product_id = t3.product_id);
 
 -- third view. stock list for store
 
-CREATE VIEW stock_list_for_store as
-SELECT t1.store_id, t1.store_name, t2.department_id, t2.category_id, t3.product_name, t2.unit_in_stock, t2.unit_available 
+DROP VIEW IF EXISTS stock_list_for_store_view;
+CREATE VIEW stock_list_for_store_view as
+SELECT t1.store_id, t1.store_name, t2.department_id, t2.category_id, t3.product_name, t2.unit_in_stock, t2.unit_available, t2.product_id 
 FROM store as t1
 LEFT OUTER JOIN stock as t2 ON (t1.store_id = t2.store_id)
 LEFT OUTER JOIN product as t3 ON (t2.product_id = t3.product_id);
@@ -988,8 +995,9 @@ LEFT OUTER JOIN product as t3 ON (t2.product_id = t3.product_id);
 
 -- fourth view
 
-CREATE VIEW sales_invoice as
-SELECT t1.customer_id, t1.given_name, t1.family_name, t2.order_status, t2.sub_total, t2.total, t2.freight, t4.product_name, t5.unit_price, t3.quantity, t6.brand_name, t7.given_name as staff_given_name, t7.family_name as staff_family_name, t8.store_name, t9.shipped_date, t10.shipper_name
+DROP VIEW IF EXISTS sales_invoice_view;
+CREATE VIEW sales_invoice_view as
+SELECT t1.customer_id, t1.given_name, t9.shipper_id, t3.product_id, t2.shipping_id, t2.store_id, t2.employee_id, t4.brand_id, t1.family_name, t2.order_status, t2.sub_total, t2.total, t2.freight, t4.product_name, t5.unit_price, t3.quantity, t6.brand_name, t7.given_name as staff_given_name, t7.family_name as staff_family_name, t8.store_name, t9.shipped_date, t10.shipper_name
 FROM customer as t1
 LEFT OUTER JOIN order_detail as t2 ON (t1.customer_id = t2.customer_id)
 LEFT OUTER JOIN order_line as t3 ON (t2.order_detail_id = t3.order_detail_id)
