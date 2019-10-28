@@ -960,6 +960,7 @@ LEFT OUTER JOIN reward as t2 ON (t1.account_id = t2.account_id)
 LEFT OUTER JOIN customer as t3 ON (t1.customer_id = t3.customer_id)
 LEFT OUTER JOIN store as t4 ON (t1.store_id = t4.store_id);
 
+-- Search for club members list by store. Store 1 = Hastings. Or can search by Store name with -- WHERE store_name = 'Hastings'
 -- SELECT * FROM club_members_list_view
 -- WHERE store_id = 1
 
@@ -974,6 +975,7 @@ FROM product as t1
 LEFT OUTER JOIN brand as t2 ON (t1.brand_id = t2.brand_id)
 LEFT OUTER JOIN stock as t3 ON (t1.product_id = t3.product_id);
 
+-- Search for Products by brand name. can also search by category
 -- SELECT product_name, brand_name, unit_price, unit_in_stock, discontinued FROM product_list_view 
 -- WHERE brand_name = 'Nerf'
 
@@ -988,6 +990,7 @@ FROM store as t1
 LEFT OUTER JOIN stock as t2 ON (t1.store_id = t2.store_id)
 LEFT OUTER JOIN product as t3 ON (t2.product_id = t3.product_id);
 
+-- Search Stock list by store. Store 1 = Hastings. Or can search by Store name with -- WHERE store_name = 'Hastings'
 -- SELECT * FROM stock_list_for_store_view
 -- WHERE store_id = 1
 
@@ -1009,7 +1012,7 @@ LEFT OUTER JOIN store as t8 ON (t2.store_id = t8.store_id)
 LEFT OUTER JOIN shipping as t9 ON (t2.shipping_id = t9.shipping_id)
 LEFT OUTER JOIN shipper as t10 ON (t9.shipper_id = t10.shipper_id);
 
-
+-- Search Sales invoices by Customer. Could also do search by given name + family name
 -- SELECT * FROM sales_invoice_view
 -- WHERE customer_id = 7
 
@@ -1018,6 +1021,8 @@ LEFT OUTER JOIN shipper as t10 ON (t9.shipper_id = t10.shipper_id);
 -- ----------------------------------------------------------
 -- PROCEDURE
 -- ----------------------------------------------------------
+
+-- first set of procedures is for creating sales invoice totals. I have split the methods up into smaller methods then call them all in the last one
 
 -- -- ----------------------------------------------------------
 -- -- order detail sub total
@@ -1080,11 +1085,16 @@ END;
 $$;
 
 
+-- Call these functions to check order lines before function called. call again to see update
+
 -- SELECT * FROM order_line
 -- WHERE order_detail_id = '003'
 
 -- SELECT * FROM order_detail
 -- WHERE order_detail_id = '003'
+
+
+-- call this function to update by order id
 
 -- CALL set_order_totals('003')
 
@@ -1092,7 +1102,7 @@ $$;
 -- return items procedures
 -- ------------------------------------------------
 
--- below are stored procedures for returning an order. i have split the methods up into smaller methods then call them all in the last one
+-- below are stored procedures for returning an order. I have split the methods up into smaller methods then call them all in the last one
 
 -- ------------------------------------------------
 -- return items to stock
